@@ -1,18 +1,40 @@
+import { useData } from "../../DataContext";
 import Event from "./../Event/Event";
+import { useHistory } from "react-router-dom";
 
-const Events = (props) => {
+const Events = () => {
+	const history = useHistory();
+
+	const {events, setEvents, fields, setFormData, filteredEvents} = useData();
+
+	const removeEvent = (eventId) => {
+		let newData = events.filter((item) => {
+			return item.id !== eventId;
+		});
+		setEvents(newData);
+	};
+
+	const onEditEvent = (event) => {
+		setFormData({
+			...fields,
+			...event,
+		});
+
+		history.push("/edit");
+	};
+
 	return (
 		<div className="events">
 			<div className="events__list">
-				{!!props.filteredEvents.length ? 
-					props.filteredEvents.map((event, index) => {
+				{!!filteredEvents.length ? 
+					filteredEvents.map((event, index) => {
 						return (
 							<Event
 								{...event}
 								key={`event_${event.id}`}
 								id={index}
-								onRemove={() => {props.removeEvent(event.id)}}
-								onEdit={() => {props.editEvent(event)}}
+								onRemove={() => {removeEvent(event.id)}}
+								onEdit={() => {onEditEvent(event)}}
 							/>
 						);
 					}) : "Событий не запланировано"
