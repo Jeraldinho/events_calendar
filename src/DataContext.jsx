@@ -3,7 +3,9 @@ import React, { useState, useEffect, useContext, createContext } from 'react';
 const DataContext = createContext();
 
 export const DataProvider = ({children}) => {
-	const [events, setEvents] = useState([]);
+	let eventsCache = JSON.parse(localStorage.getItem("events"));
+
+	const [events, setEvents] = useState(eventsCache);
 
 	const [filteredEvents, setFilteredEvents] = useState([]);
 
@@ -30,8 +32,9 @@ export const DataProvider = ({children}) => {
 		let newData = events.filter((event) => event.date === date);
 
 		setFilteredEvents(newData);
+
+		localStorage.setItem("events", JSON.stringify(events));
 	}, [events]);
-	
 	
 	return (
 		<DataContext.Provider value={{

@@ -1,3 +1,4 @@
+import './Events.css'
 import { useData } from "../../DataContext";
 import Event from "./../Event/Event";
 import { useHistory } from "react-router-dom";

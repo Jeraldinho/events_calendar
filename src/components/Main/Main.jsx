@@ -2,13 +2,20 @@ import React from "react";
 import "../../css/materialdesignicons.min.css";
 import Events from "../Events/Events";
 import DatePicker from "react-datepicker";
+import { subDays } from "date-fns";
 import ru from "date-fns/locale/ru";
 import "react-datepicker/dist/react-datepicker.css";
 import { useHistory } from "react-router-dom";
 import { useData } from "../../DataContext";
 
 const Main = (props) => {
-	const {events, fields, setFormData, formInputs, setFilteredEvents} = useData();
+	const {
+		events,
+		fields,
+		setFormData,
+		formInputs,
+		setFilteredEvents,
+	} = useData();
 
 	const { date } = fields;
 
@@ -39,6 +46,12 @@ const Main = (props) => {
 		});
 
 		history.push("/add");
+	};
+
+	const highliteDates = () => {
+		return events.map((event) => {
+			return (subDays(new Date(event.date), 0))
+		})
 	}
 
 	return (
@@ -52,8 +65,9 @@ const Main = (props) => {
 					<DatePicker
 						dateFromat="YYYY-MM-dd"
 						selected={date}
-						minDate={new Date()}
+						//minDate={new Date()}
 						onChange={(date) => onChangeEventDate(date)}
+						highlightDates={highliteDates()}
 						calendarStartDay={1}
 						value={date}
 						locale={ru}
