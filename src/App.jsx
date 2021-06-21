@@ -5,7 +5,7 @@ import Main from "./components/Main/Main";
 import EventAdd from "./components/EventAdd/EventAdd";
 import EventEdit from "./components/EventEdit/EventEdit";
 
-function App(props) {
+function App() {
 	return (
 		<div className="App">
 			<Header />
@@ -13,8 +13,8 @@ function App(props) {
 			<Router>
 				<Switch>
 					<Route exact path="/" component={Main} />
-					<Route  path="/add" component={EventAdd} />
-					<Route  path="/edit" component={EventEdit} />
+					<Route path="/add" component={EventAdd} />
+					<Route path="/edit" component={EventEdit} />
 				</Switch>
 			</Router>
 		</div>

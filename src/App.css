@@ -75,3 +75,17 @@ img {
 	font-weight: 500;
 	margin-bottom: 20px;
 }
+
+input.error,
+textarea.error {
+	border-color: #ce0909;
+}
+
+.error-message {
+	color: #ce0909;
+	font-size: 14px;
+}
+
+.btn:disabled {
+	cursor: not-allowed;
+}
