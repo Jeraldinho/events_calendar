@@ -3,7 +3,7 @@ import React, { useState, useEffect, useContext, createContext } from 'react';
 const DataContext = createContext();
 
 export const DataProvider = ({children}) => {
-	let eventsCache = JSON.parse(localStorage.getItem("events"));
+	let eventsCache = !!localStorage.getItem("events") ? JSON.parse(localStorage.getItem("events")) : [];
 
 	const [events, setEvents] = useState(eventsCache);
 
