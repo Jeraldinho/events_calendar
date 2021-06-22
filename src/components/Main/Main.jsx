@@ -9,6 +9,7 @@ import { useHistory } from "react-router-dom";
 import { useData } from "../../DataContext";
 
 const Main = (props) => {
+	// Получаем данные из контекста через кастомный хук
 	const {
 		events,
 		fields,
@@ -17,28 +18,41 @@ const Main = (props) => {
 		setFilteredEvents,
 	} = useData();
 
-	const { date } = fields;
-
+	// Используем хук для роутинга
 	const history = useHistory();
 
+	// Достаем дату и сохраняем в переменную
+	const { date } = fields;
+
+	// Функция, меняющая формат даты
 	let dateFormat = (date) => {
 		return date.setHours(0, 0, 0, 0);
 	};
 
+	// Действия при изменении даты в календаре
 	const onChangeEventDate = (date) => {
+		// Меняем формат даты из строки в число
 		let newDate = dateFormat(date);
 
+		// Меняем полученную дату в state
 		setFormData({
 			...fields,
 			date: newDate,
 		});
 
+		// Фильтруем события по полученной дате
 		let newData = events.filter((event) => event.date === newDate);
 
+		// Обновляем state фильтрованных по дате событий
 		setFilteredEvents(newData);
 	};
 
+	// Переход на страницу добавления события
 	const toAddEvent = () => {
+		/* 
+			Обнуляем поля формы если до этого что-то вводили, но нажали Отмена или пытались редактировать событие, 
+			но потом нажали Отмена и теперь снова пробуем добавить событие
+		*/
 		setFormData({
 			...fields,
 			...formInputs,
@@ -48,6 +62,7 @@ const Main = (props) => {
 		history.push("/add");
 	};
 
+	// Подсвечиваем даты, на которые назначены события
 	const highliteDates = () => {
 		return events.map((event) => {
 			return (subDays(new Date(event.date), 0))
@@ -57,7 +72,7 @@ const Main = (props) => {
 	return (
 		<main className="content container">
 			<div className="row">
-				<div className="sidebar choose-date col-4">
+				<div className="sidebar choose-date col-12 col-sm-12 col-md-4">
 					<div className="choose-date__title">
 						Выберите дату события:
 					</div>
@@ -84,7 +99,7 @@ const Main = (props) => {
 					</div>
 				</div>
 
-				<div className="content col-8">
+				<div className="content col-12 col-sm-12 col-md-8 mt-4 mt-md-0">
 					<h3 className="mb-3">Список событий</h3>
 					<Events />
 				</div>

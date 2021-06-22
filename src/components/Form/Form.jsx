@@ -9,6 +9,10 @@ const Form = (props) => {
 
 	const { date, name, type, budget, address, time, note } = fields;
 
+	/* 
+		Объявление переменной исходного состояния ошибки
+		Объявление двух состояний. Dirty - состояние инпута после клика и потери фокуса
+	*/
 	const nameErrorInit = !!name ? '' : "Введите название события";
 	const [nameDirty, setNameDirty] = useState(false);
 	const [nameError, setNameError] = useState(nameErrorInit);
@@ -29,8 +33,10 @@ const Form = (props) => {
 	const [noteDirty, setNoteDirty] = useState(false);
 	const [noteError, setNoteError] = useState(noteErrorInit);
 
+	// Переменная состояния валидности формы
 	const [isFormValid, setFormValid] = useState(false);
 
+	// При изменении состояний ошибок проверяем форму на валидность 
 	useEffect(() => {
 		switch (type) {
 			case "1":
@@ -60,6 +66,7 @@ const Form = (props) => {
 		}
 	}, [nameError, budgetError, addressError, timeError, noteError, type]);
 
+	// При изменении типа события управляем состоянием ошибок и Dirty
 	useEffect(() => {
 		switch (type) {
 			case "1":
@@ -69,7 +76,6 @@ const Form = (props) => {
 					time: "",
 					note: "",
 				});
-
 				
 				setAddressDirty(false);
 				setTimeDirty(false);
@@ -106,6 +112,7 @@ const Form = (props) => {
 		}
 	}, [type]);
 
+	// Обработчик события blur инпутов
 	const blurHandler = (e) => {
 		switch (e.target.name) {
 			case "event_name":
@@ -202,7 +209,9 @@ const Form = (props) => {
 		});
 	};
 
+	// Добавление события в state events
 	const addEvent = () => {
+		// Назначение поля id добавляемому событию
 		if (events.length !== 0) {
 			fields.id = events[events.length - 1].id + 1;
 		} else {
@@ -220,6 +229,7 @@ const Form = (props) => {
 		history.push("/");
 	};
 
+	// Обновление события
 	const onUpdateEvent = () => {
 		let newData = events.map((event) =>
 			event.id === fields.id ? { ...event, ...fields } : event

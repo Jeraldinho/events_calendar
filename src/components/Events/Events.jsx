@@ -8,6 +8,7 @@ const Events = () => {
 
 	const {events, setEvents, fields, setFormData, filteredEvents} = useData();
 
+	// Обработчик кнопки удаления события
 	const removeEvent = (eventId) => {
 		let newData = events.filter((item) => {
 			return item.id !== eventId;
@@ -15,6 +16,7 @@ const Events = () => {
 		setEvents(newData);
 	};
 
+	// Обработчик кнопки редактирования события
 	const onEditEvent = (event) => {
 		setFormData({
 			...fields,
